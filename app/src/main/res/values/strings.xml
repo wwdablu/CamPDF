@@ -15,4 +15,6 @@
     <string name="menu_send">Send</string>
     <string name="no_hardware_camera">Device does not have a camera.</string>
     <string name="needs_camera_permission">Needs camera access.</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
 </resources>
