@@ -12,14 +12,17 @@ import java.io.IOException;
 
 public final class ImageManager {
 
-    public static boolean save(@NonNull Bitmap bitmap,
-                             @NonNull File file,
-                             Bitmap.CompressFormat compressFormat,
-                             @IntRange(from = 1, to = 100) int compress) {
+    private int imageCount = 0;
+
+    public boolean save(@NonNull Bitmap bitmap,
+                        @NonNull File file,
+                        Bitmap.CompressFormat compressFormat,
+                        @IntRange(from = 1, to = 100) int compress) {
 
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(file);
+            fos = new FileOutputStream(new File(file.getAbsoluteFile() +
+                    File.separator + ++imageCount + resolveExt(compressFormat)));
             bitmap.compress(compressFormat, compress, fos);
             fos.flush();
         } catch (IOException iox) {
@@ -37,5 +40,18 @@ public final class ImageManager {
         }
 
         return true;
+    }
+
+    private String resolveExt(Bitmap.CompressFormat compressFormat) {
+        switch (compressFormat) {
+            case JPEG:
+                return ".jpg";
+            case PNG:
+                return ".png";
+            case WEBP:
+                return ".webp";
+        }
+
+        return ".jpg";
     }
 }

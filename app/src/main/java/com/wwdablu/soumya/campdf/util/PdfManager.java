@@ -2,7 +2,6 @@ package com.wwdablu.soumya.campdf.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.print.PrintAttributes;
 
 import androidx.annotation.NonNull;
@@ -26,9 +25,9 @@ public final class PdfManager {
 
     private boolean mIsFirstPage = true;
 
-    public PdfManager(@NonNull Context context, @NonNull String fileName) {
+    public PdfManager(@NonNull Context context, @NonNull File file) {
 
-        mSimplyPdfDocument = SimplyPdf.with(context, new File(Environment.getExternalStorageDirectory().getAbsolutePath() + fileName))
+        mSimplyPdfDocument = SimplyPdf.with(context, file)
                 .colorMode(DocumentInfo.ColorMode.COLOR)
                 .margin(DocumentInfo.Margins.DEFAULT)
                 .paperOrientation(DocumentInfo.Orientation.PORTRAIT)
