@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.hardware.camera2.CameraDevice;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.TextureView;
 import android.widget.Button;
@@ -17,9 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.wwdablu.soumya.cam2lib.Cam2Lib;
 import com.wwdablu.soumya.cam2lib.Cam2LibCallback;
 import com.wwdablu.soumya.cam2lib.Cam2LibConverter;
+import com.wwdablu.soumya.campdf.util.ImageManager;
 import com.wwdablu.soumya.campdf.util.PdfManager;
 import com.wwdablu.soumya.campdf.util.ShareBox;
 
+import java.io.File;
 import java.io.IOException;
 
 public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibCallback {
@@ -59,6 +62,11 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
         //TODO - Call a worker to save the bitmap in the PDF
         PdfManager pdfManager = new PdfManager(this, "/Hello.pdf");
         pdfManager.write(capturedBitmap);
+
+        //TODO - Save the bitmap if required
+        ImageManager.save(capturedBitmap, new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.jpg"),
+                Bitmap.CompressFormat.JPEG, 100);
+
         try {
             pdfManager.publish();
         } catch (IOException e) {

@@ -48,7 +48,6 @@ public final class PdfManager {
         }
 
         mImageComposer.drawBitmap(bitmap, mImageProperties);
-        bitmap.recycle();
         mIsFirstPage = false;
     }
 
