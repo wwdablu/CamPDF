@@ -1,4 +1,4 @@
-package com.wwdablu.soumya.campdf;
+package com.wwdablu.soumya.campdf.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -6,9 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -18,6 +15,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.wwdablu.soumya.campdf.R;
 import com.wwdablu.soumya.campdf.util.CameraHelper;
 
 import androidx.drawerlayout.widget.DrawerLayout;

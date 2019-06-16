@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#790ffc</color>
+    <color name="colorPrimaryDark">#790ffc</color>
+    <color name="colorAccent">#790ffc</color>
+
+    <color name="recycler_background">#000000</color>
+    <color name="capture_preview_background">#000000</color>
+    <color name="nav_grad_end">#8421ff</color>
 </resources>

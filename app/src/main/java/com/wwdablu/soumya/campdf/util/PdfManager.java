@@ -40,10 +40,6 @@ public final class PdfManager {
         mImageComposer = new ImageComposer(mSimplyPdfDocument);
     }
 
-    public SimplyPdfDocument getmSimplyPdfDocument() {
-        return mSimplyPdfDocument;
-    }
-
     public void write(@NonNull Bitmap bitmap) {
 
         if(!mIsFirstPage) {

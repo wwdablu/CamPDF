@@ -1,4 +1,4 @@
-package com.wwdablu.soumya.campdf;
+package com.wwdablu.soumya.campdf.activity;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.wwdablu.soumya.campdf.R;
 import com.wwdablu.soumya.campdf.firebase.Analytics;
 import com.wwdablu.soumya.campdf.util.ShareBox;
 

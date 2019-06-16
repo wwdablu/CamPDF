@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CameraCaptureActivity">
+    tools:context=".activity.CameraCaptureActivity">
 
     <TextureView
         android:layout_width="match_parent"
@@ -15,19 +15,54 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@id/gl_options_container"
+        android:layout_alignBottom="@id/gl_options_container"
         android:background="#FFFFFF"
-        android:alpha="0.5"
+        android:alpha="0.50"
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_capture"
-        android:text="Capture"
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:id="@+id/gl_options_container"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        />
+        android:layout_alignParentStart="true"
+        android:columnCount="4"
+        android:rowCount="1">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:id="@+id/btn_complete"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:background="@null"
+            android:src="@drawable/ic_accept"
+            android:contentDescription="@string/accept_capture"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:id="@+id/btn_capture"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:background="@null"
+            android:src="@drawable/ic_menu_camera"
+            android:contentDescription="@string/accept_capture"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:id="@+id/btn_cancel"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:background="@null"
+            android:src="@drawable/ic_cancel"
+            android:contentDescription="@string/cancel_capture"/>
+
+    </GridLayout>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.wwdablu.soumya.campdf;
+package com.wwdablu.soumya.campdf.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,7 +9,6 @@ import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.TextureView;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.wwdablu.soumya.cam2lib.Cam2Lib;
 import com.wwdablu.soumya.cam2lib.Cam2LibCallback;
 import com.wwdablu.soumya.cam2lib.Cam2LibConverter;
+import com.wwdablu.soumya.campdf.R;
 import com.wwdablu.soumya.campdf.firebase.Analytics;
 import com.wwdablu.soumya.campdf.util.ImageManager;
 import com.wwdablu.soumya.campdf.util.PdfManager;
@@ -46,9 +46,10 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
         setContentView(R.layout.activity_camera_capture);
 
         TextureView textureView = findViewById(R.id.texv_camera);
-        Button captureButton = findViewById(R.id.btn_capture);
 
-        captureButton.setOnClickListener(view -> cam2Lib.getImage());
+        findViewById(R.id.btn_capture).setOnClickListener(view -> cam2Lib.getImage());
+        findViewById(R.id.btn_accept_capture).setOnClickListener(view -> saveSessionData());
+        findViewById(R.id.btn_cancel).setOnClickListener(view -> cancelSessionData());
 
         //Create the session ID
         createSessionId();
@@ -131,11 +132,15 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
             .setMessage("Do you want to complete the session and generate the PDF document")
             .setPositiveButton("Yes", (dialogInterface, i) -> saveSessionData())
             .setNegativeButton("No", (dialogInterface, i) -> {
-                StorageManager.cleanImages(mStoragePath);
-                finish();
+                cancelSessionData();
             })
             .setNeutralButton("Cancel", (dialogInterface, i) -> cam2Lib.startPreview())
             .show();
+    }
+
+    private void cancelSessionData() {
+        StorageManager.cleanImages(mStoragePath);
+        finish();
     }
 
     private void saveSessionData() {

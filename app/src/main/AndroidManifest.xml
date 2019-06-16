@@ -21,10 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CapturePreviewActivity"/>
-        <activity android:name=".CameraCaptureActivity" />
+        <activity android:name=".activity.CapturePreviewActivity"/>
+        <activity android:name=".activity.CameraCaptureActivity" android:theme="@style/AppTheme.NoActionBar.FullScreen" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
