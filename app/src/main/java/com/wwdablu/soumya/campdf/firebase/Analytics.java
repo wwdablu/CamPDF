@@ -19,7 +19,7 @@ public final class Analytics {
     private Analytics(@NonNull Context context) {
         mContext = context;
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(mContext);
-        mId = BuildConfig.DEBUG ? "__debug__" : "";
+        mId = BuildConfig.DEBUG ? "debug__" : "";
     }
 
     public static Analytics getInstance(@NonNull Context context) {

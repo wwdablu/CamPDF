@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,20 +17,30 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.wwdablu.soumya.campdf.R;
+import com.wwdablu.soumya.campdf.adapter.CaptureSessionView;
+import com.wwdablu.soumya.campdf.manager.StorageManager;
 import com.wwdablu.soumya.campdf.util.CameraHelper;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
+import android.view.View;
 import android.widget.Toast;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int PERMISSION_REQUEST_CODE = 100;
+
+    private CaptureSessionView mCaptureSessionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +72,41 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        RecyclerView sessionRecyclerView = findViewById(R.id.rv_captured_docs_list);
+        sessionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mCaptureSessionList = new CaptureSessionView(StorageManager.getCapturedSessions(this));
+        sessionRecyclerView.setAdapter(mCaptureSessionList);
+        updateList();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode != 1000) {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+
+        updateList();
+    }
+
+    private void updateList() {
+
+        LinkedList<StorageManager.EntryInfo> list = StorageManager.getCapturedSessions(this);
+        if(list.size() == 0) {
+            findViewById(R.id.incl_app_bar_main).findViewById(R.id.incl_content_main)
+                .findViewById(R.id.tv_no_captured_content).setVisibility(View.VISIBLE);
+            findViewById(R.id.incl_app_bar_main).findViewById(R.id.incl_content_main)
+                    .findViewById(R.id.rv_captured_docs_list).setVisibility(View.GONE);
+        } else {
+
+            findViewById(R.id.incl_app_bar_main).findViewById(R.id.incl_content_main)
+                    .findViewById(R.id.tv_no_captured_content).setVisibility(View.GONE);
+            findViewById(R.id.incl_app_bar_main).findViewById(R.id.incl_content_main)
+                    .findViewById(R.id.rv_captured_docs_list).setVisibility(View.VISIBLE);
+            mCaptureSessionList.setData(list);
+        }
     }
 
     @Override
@@ -131,6 +177,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void launchCamera() {
-        startActivity(new Intent(this, CameraCaptureActivity.class));
+        startActivityForResult(new Intent(this, CameraCaptureActivity.class), 1000);
     }
 }

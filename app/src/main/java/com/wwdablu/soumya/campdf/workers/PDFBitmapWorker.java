@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.wwdablu.soumya.campdf.util.PdfManager;
+import com.wwdablu.soumya.campdf.manager.PdfManager;
 
 import java.io.File;
 import java.io.IOException;

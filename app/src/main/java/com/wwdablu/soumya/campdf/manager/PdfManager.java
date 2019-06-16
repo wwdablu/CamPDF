@@ -1,4 +1,4 @@
-package com.wwdablu.soumya.campdf.util;
+package com.wwdablu.soumya.campdf.manager;
 
 import android.content.Context;
 import android.graphics.Bitmap;

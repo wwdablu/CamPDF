@@ -28,6 +28,8 @@
         android:layout_height="match_parent"
         android:id="@+id/rv_captured_docs_list"
         android:background="@color/recycler_background"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:paddingTop="16dp"
         android:visibility="gone"
         />
 

@@ -24,4 +24,15 @@
     <string name="rotate_right">Rotate Right</string>
     <string name="could_not_retrieve_captured_image">Could not retrieve the captured image.</string>
     <string name="no_pdf_start_creating">No PDF has been generated yet. Click on the icon on the below corner to start creating PDF document.</string>
+    <string name="complete_session">Complete Session</string>
+    <string name="ask_complete_session">Do you want to complete the session and generate the PDF document</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="provide_name_of_the_file">Provide name of the file</string>
+    <string name="save_as_pdf">Save as PDF</string>
+    <string name="save_as_jpeg_files">Save as JPEG files</string>
+    <string name="create_zip_archive_of_images">Create zip archive of images</string>
+    <string name="completed">Completed</string>
+    <string name="share_document">Share document</string>
+    <string name="delete_document">Delete document</string>
 </resources>

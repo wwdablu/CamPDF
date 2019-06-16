@@ -8,7 +8,11 @@ import android.hardware.camera2.CameraDevice;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.TextureView;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,11 +23,11 @@ import com.wwdablu.soumya.cam2lib.Cam2LibCallback;
 import com.wwdablu.soumya.cam2lib.Cam2LibConverter;
 import com.wwdablu.soumya.campdf.R;
 import com.wwdablu.soumya.campdf.firebase.Analytics;
-import com.wwdablu.soumya.campdf.util.ImageManager;
-import com.wwdablu.soumya.campdf.util.PdfManager;
+import com.wwdablu.soumya.campdf.manager.ImageManager;
+import com.wwdablu.soumya.campdf.manager.PdfManager;
 import com.wwdablu.soumya.campdf.util.ShareBox;
-import com.wwdablu.soumya.campdf.util.StorageManager;
-import com.wwdablu.soumya.campdf.util.ZipManager;
+import com.wwdablu.soumya.campdf.manager.StorageManager;
+import com.wwdablu.soumya.campdf.manager.ZipManager;
 import com.wwdablu.soumya.campdf.workers.PDFBitmapWorker;
 import com.wwdablu.soumya.wzip.WZipCallback;
 
@@ -39,6 +43,7 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
     private File mStoragePath;
 
     private String mSessionId;
+    private String mFileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,7 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
         TextureView textureView = findViewById(R.id.texv_camera);
 
         findViewById(R.id.btn_capture).setOnClickListener(view -> cam2Lib.getImage());
-        findViewById(R.id.btn_accept_capture).setOnClickListener(view -> saveSessionData());
+        findViewById(R.id.btn_complete).setOnClickListener(view -> saveSessionData());
         findViewById(R.id.btn_cancel).setOnClickListener(view -> cancelSessionData());
 
         //Create the session ID
@@ -57,7 +62,6 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
         mStoragePath = StorageManager.createFolder(this, mSessionId);
 
         mImageManager = new ImageManager();
-        mPdfManager = new PdfManager(this, new File(mStoragePath.getAbsoluteFile() + File.separator + "file.pdf"));
 
         cam2Lib = new Cam2Lib(this, this);
         cam2Lib.open(textureView, CameraDevice.TEMPLATE_PREVIEW);
@@ -128,47 +132,68 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
         cam2Lib.stopPreview();
 
         new AlertDialog.Builder(this)
-            .setTitle("Complete Session")
-            .setMessage("Do you want to complete the session and generate the PDF document")
-            .setPositiveButton("Yes", (dialogInterface, i) -> saveSessionData())
-            .setNegativeButton("No", (dialogInterface, i) -> {
-                cancelSessionData();
-            })
-            .setNeutralButton("Cancel", (dialogInterface, i) -> cam2Lib.startPreview())
+            .setTitle(getString(R.string.complete_session))
+            .setMessage(getString(R.string.ask_complete_session))
+            .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> saveSessionData())
+            .setNegativeButton(getString(R.string.no), (dialogInterface, i) -> cancelSessionData())
+            .setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> cam2Lib.startPreview())
             .show();
     }
 
     private void cancelSessionData() {
+        setResult(Activity.RESULT_CANCELED);
         StorageManager.cleanImages(mStoragePath);
         finish();
     }
 
     private void saveSessionData() {
 
-        new PDFBitmapWorker(mStoragePath, mPdfManager, new PDFBitmapWorker.Callback() {
-            @Override
-            public void onStarted() {
-                //
-            }
+        final View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_save_capture, null, false);
 
-            @Override
-            public void onCompleted() {
-                Analytics.getInstance().logPdfCreation();
-                //TODO - Generate zip if required
-                generateZipArchive();
-            }
+        AlertDialog dialog = new AlertDialog.Builder(this)
+            .setTitle("File Name")
+            .setMessage("Provide name of the file")
+            .setView(dialogView)
+            .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
 
-            @Override
-            public void onError() {
-                //
-            }
+                mFileName = ((EditText) dialogView.findViewById(R.id.et_file_name)).getText().toString();
+                mPdfManager = new PdfManager(this, new File(mStoragePath.getAbsoluteFile() + File.separator + mFileName + ".pdf"));
 
-        }).start();
+                new PDFBitmapWorker(mStoragePath, mPdfManager, new PDFBitmapWorker.Callback() {
+                    @Override
+                    public void onStarted() {
+                        //
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        Analytics.getInstance().logPdfCreation();
+
+                        CheckBox saveAsZip = dialogView.findViewById(R.id.cb_save_image_zip);
+                        CheckBox saveImages = dialogView.findViewById(R.id.cb_save_as_images);
+
+                        if(saveAsZip.isChecked()) {
+                            generateZipArchive(saveImages.isChecked());
+                        } else {
+                            setResult(Activity.RESULT_OK);
+                            StorageManager.cleanImages(mStoragePath);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        //
+                    }
+                }).start();
+            })
+            .setNegativeButton(getString(R.string.cancel), null)
+            .show();
     }
 
-    private void generateZipArchive() {
+    private void generateZipArchive(final boolean saveImages) {
 
-        ZipManager.generateZip(mSessionId, mStoragePath, new WZipCallback() {
+        ZipManager.generateZip(mFileName, mStoragePath, new WZipCallback() {
             @Override
             public void onStarted(String identifier) {
                 //
@@ -177,9 +202,16 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
             @Override
             public void onZipCompleted(File zipFile, String identifier) {
 
+                if(saveImages) {
+                    Analytics.getInstance().logImageCreation();
+                } else {
+                    StorageManager.cleanImages(mStoragePath);
+                }
+
                 Analytics.getInstance().logZipCreation();
                 runOnUiThread(() -> {
-                    Toast.makeText(CameraCaptureActivity.this, "Completed", Toast.LENGTH_SHORT).show();
+                    setResult(Activity.RESULT_OK);
+                    Toast.makeText(CameraCaptureActivity.this, getString(R.string.completed), Toast.LENGTH_SHORT).show();
                     finish();
                 });
             }
