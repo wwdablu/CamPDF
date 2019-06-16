@@ -2,15 +2,12 @@ package com.wwdablu.soumya.campdf;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.hardware.camera2.CameraDevice;
 import android.media.Image;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.TextureView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -25,18 +22,16 @@ import com.wwdablu.soumya.campdf.util.ImageManager;
 import com.wwdablu.soumya.campdf.util.PdfManager;
 import com.wwdablu.soumya.campdf.util.ShareBox;
 import com.wwdablu.soumya.campdf.util.StorageManager;
+import com.wwdablu.soumya.campdf.util.ZipManager;
 import com.wwdablu.soumya.campdf.workers.PDFBitmapWorker;
+import com.wwdablu.soumya.wzip.WZipCallback;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 
 public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibCallback {
 
     private Cam2Lib cam2Lib;
-    private TextureView textureView;
-    private Button captureButton;
 
     private ImageManager mImageManager;
     private PdfManager mPdfManager;
@@ -49,8 +44,8 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_capture);
 
-        textureView = findViewById(R.id.texv_camera);
-        captureButton = findViewById(R.id.btn_capture);
+        TextureView textureView = findViewById(R.id.texv_camera);
+        Button captureButton = findViewById(R.id.btn_capture);
 
         captureButton.setOnClickListener(view -> cam2Lib.getImage());
 
@@ -128,22 +123,68 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
 
     private void confirmSessionEnd() {
 
+        cam2Lib.stopPreview();
+
         new AlertDialog.Builder(this)
             .setTitle("Complete Session")
             .setMessage("Do you want to complete the session and generate the PDF document")
-            .setPositiveButton("Yes", (dialogInterface, i) -> {
-                Thread t = new PDFBitmapWorker(mStoragePath, mPdfManager);
-                t.start();
-                finish();
-            })
+            .setPositiveButton("Yes", (dialogInterface, i) -> saveSessionData())
             .setNegativeButton("No", (dialogInterface, i) -> {
-                StorageManager.clean(mStoragePath);
+                StorageManager.cleanImages(mStoragePath);
                 finish();
             })
-            .setNeutralButton("Cancel", (dialogInterface, i) -> {
-                //Do nothing
-            })
+            .setNeutralButton("Cancel", (dialogInterface, i) -> cam2Lib.startPreview())
             .show();
+    }
+
+    private void saveSessionData() {
+
+        new PDFBitmapWorker(mStoragePath, mPdfManager, new PDFBitmapWorker.Callback() {
+            @Override
+            public void onStarted() {
+                //
+            }
+
+            @Override
+            public void onCompleted() {
+                //TODO - Generate zip if required
+                generateZipArchive();
+            }
+
+            @Override
+            public void onError() {
+                //
+            }
+
+        }).start();
+    }
+
+    private void generateZipArchive() {
+
+        ZipManager.generateZip(mSessionId, mStoragePath, new WZipCallback() {
+            @Override
+            public void onStarted(String identifier) {
+                //
+            }
+
+            @Override
+            public void onZipCompleted(File zipFile, String identifier) {
+                runOnUiThread(() -> {
+                    Toast.makeText(CameraCaptureActivity.this, "Completed", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+            }
+
+            @Override
+            public void onUnzipCompleted(String identifier) {
+                //
+            }
+
+            @Override
+            public void onError(Throwable throwable, String identifier) {
+                finish();
+            }
+        });
     }
 
     private void createSessionId() {

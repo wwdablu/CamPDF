@@ -34,11 +34,11 @@ public final class StorageManager {
         return base;
     }
 
-    public static boolean clean(@NonNull File storageDirectory) {
+    public static boolean cleanImages(@NonNull File storageDirectory) {
 
         File[] files = storageDirectory.listFiles();
         for(File file : files) {
-            if(!file.delete()) {
+            if(!file.getName().toLowerCase().endsWith(".pdf") && !file.delete()) {
                 Log.d(StorageManager.class.getName(), "Could not delete, " + file.getName());
             }
         }
