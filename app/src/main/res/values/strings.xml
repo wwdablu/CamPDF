@@ -17,4 +17,10 @@
     <string name="needs_camera_permission">Needs camera access.</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
+    <string name="captured_image">Captured image</string>
+    <string name="accept_capture">Accept Capture</string>
+    <string name="cancel_capture">Cancel Capture</string>
+    <string name="rotate_left">Rotate Left</string>
+    <string name="rotate_right">Rotate Right</string>
+    <string name="could_not_retrieve_captured_image">Could not retrieve the captured image.</string>
 </resources>

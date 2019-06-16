@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.wwdablu.soumya.cam2lib.Cam2Lib;
 import com.wwdablu.soumya.cam2lib.Cam2LibCallback;
 import com.wwdablu.soumya.cam2lib.Cam2LibConverter;
+import com.wwdablu.soumya.campdf.firebase.Analytics;
 import com.wwdablu.soumya.campdf.util.ImageManager;
 import com.wwdablu.soumya.campdf.util.PdfManager;
 import com.wwdablu.soumya.campdf.util.ShareBox;
@@ -147,6 +148,7 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
 
             @Override
             public void onCompleted() {
+                Analytics.getInstance().logPdfCreation();
                 //TODO - Generate zip if required
                 generateZipArchive();
             }
@@ -169,6 +171,8 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
 
             @Override
             public void onZipCompleted(File zipFile, String identifier) {
+
+                Analytics.getInstance().logZipCreation();
                 runOnUiThread(() -> {
                     Toast.makeText(CameraCaptureActivity.this, "Completed", Toast.LENGTH_SHORT).show();
                     finish();

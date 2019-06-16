@@ -39,10 +39,8 @@ public final class PDFBitmapWorker extends Thread {
 
             if (isSupportedImageFile(file)) {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                Bitmap scaledBitmap = scaleBitmap(bitmap);
-                mPdfManager.write(scaledBitmap);
+                mPdfManager.write(bitmap);
                 bitmap.recycle();
-                scaledBitmap.recycle();
                 System.gc();
             }
         }
@@ -60,32 +58,5 @@ public final class PDFBitmapWorker extends Thread {
     private boolean isSupportedImageFile(File file) {
         return file != null && file.canRead() && (file.getName().toLowerCase().endsWith(".jpg") ||
                 file.getName().toLowerCase().endsWith(".png"));
-    }
-
-    private Bitmap scaleBitmap(Bitmap bm) {
-
-        float width = bm.getWidth();
-        float height = bm.getHeight();
-
-        float maxWidth = mPdfManager.getmSimplyPdfDocument().getUsablePageWidth();
-        float maxHeight = mPdfManager.getmSimplyPdfDocument().getPageContentHeight();
-
-        if (width > height) {
-            // landscape
-            float ratio = width / maxWidth;
-            width = maxWidth;
-            height = (int)(height / ratio);
-        } else if (height > width) {
-            // portrait
-            float ratio = height / maxHeight;
-            height = maxHeight;
-            width = (int)(width / ratio);
-        } else {
-            // square
-            height = maxHeight;
-            width = maxWidth;
-        }
-
-        return Bitmap.createScaledBitmap(bm, (int) width, (int) height, true);
     }
 }

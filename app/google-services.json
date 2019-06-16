@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "984641892398",
+    "firebase_url": "https://campdf-47893.firebaseio.com",
+    "project_id": "campdf-47893",
+    "storage_bucket": "campdf-47893.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984641892398:android:16640f659b160cc7",
+        "android_client_info": {
+          "package_name": "com.wwdablu.soumya.campdf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984641892398-533aa7fo2u5rmrooiqj2mrapdpa6r9pe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wwdablu.soumya.campdf",
+            "certificate_hash": "a8b5d1a953aff5437e18df94843d9a90e1b115b4"
+          }
+        },
+        {
+          "client_id": "984641892398-8448lrq8u7n7bnfdfl0pu2u1tfb8t72q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkVDnwQuI3cvo4lV47xypf3feTi6EsJ9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984641892398-8448lrq8u7n7bnfdfl0pu2u1tfb8t72q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
