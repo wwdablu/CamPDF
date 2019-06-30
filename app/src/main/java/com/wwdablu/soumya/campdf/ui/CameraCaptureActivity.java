@@ -1,4 +1,4 @@
-package com.wwdablu.soumya.campdf.activity;
+package com.wwdablu.soumya.campdf.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;

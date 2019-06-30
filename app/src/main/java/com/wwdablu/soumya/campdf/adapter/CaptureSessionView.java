@@ -1,11 +1,14 @@
 package com.wwdablu.soumya.campdf.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wwdablu.soumya.campdf.R;
@@ -47,13 +50,25 @@ public class CaptureSessionView extends RecyclerView.Adapter<CaptureSessionView.
     class CaptureSessionViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mFileNameTextView;
+        private CardView mCardView;
 
-        public CaptureSessionViewHolder(@NonNull View itemView) {
+        CaptureSessionViewHolder(@NonNull View itemView) {
             super(itemView);
             mFileNameTextView = itemView.findViewById(R.id.tv_file_name);
+            mCardView = itemView.findViewById(R.id.cv_container);
+
+            mCardView.setOnClickListener(view -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                StorageManager.EntryInfo entryInfo = mEntryInfoList.get(getAdapterPosition());
+                String auth = view.getContext().getPackageName() + ".fileprovider";
+                intent.setDataAndType(FileProvider.getUriForFile(view.getContext(), auth, entryInfo.getPdfFile()), "application/pdf");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                view.getContext().startActivity(intent);
+            });
         }
 
-        public void bind(StorageManager.EntryInfo entryInfo) {
+        void bind(StorageManager.EntryInfo entryInfo) {
             mFileNameTextView.setText(entryInfo.getFileName());
         }
     }

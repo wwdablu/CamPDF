@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/capture_preview_background"
-    tools:context=".activity.CapturePreviewActivity">
+    tools:context=".ui.CapturePreviewActivity">
 
     <!-- Provides a translucent background to the container -->
     <View
