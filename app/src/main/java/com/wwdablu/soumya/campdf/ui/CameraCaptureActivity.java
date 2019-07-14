@@ -25,9 +25,9 @@ import com.wwdablu.soumya.campdf.R;
 import com.wwdablu.soumya.campdf.firebase.Analytics;
 import com.wwdablu.soumya.campdf.manager.ImageManager;
 import com.wwdablu.soumya.campdf.manager.PdfManager;
-import com.wwdablu.soumya.campdf.util.ShareBox;
 import com.wwdablu.soumya.campdf.manager.StorageManager;
 import com.wwdablu.soumya.campdf.manager.ZipManager;
+import com.wwdablu.soumya.campdf.util.ShareBox;
 import com.wwdablu.soumya.campdf.workers.PDFBitmapWorker;
 import com.wwdablu.soumya.wzip.WZipCallback;
 
@@ -75,15 +75,14 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
             return;
         }
 
-        Bitmap capturedBitmap = null;
         if(resultCode == Activity.RESULT_OK) {
-            capturedBitmap = (Bitmap) ShareBox.getInstance().access("captureBitmap");
+            Bitmap capturedBitmap = (Bitmap) ShareBox.getInstance().access("captureBitmap");
             ShareBox.getInstance().remove("captureBitmap");
-        }
 
-        if(capturedBitmap != null) {
-            mImageManager.save(capturedBitmap, mStoragePath, Bitmap.CompressFormat.JPEG, 100);
-            capturedBitmap.recycle();
+            if(capturedBitmap != null) {
+                mImageManager.save(capturedBitmap, mStoragePath, Bitmap.CompressFormat.JPEG,
+                        100, true);
+            }
         }
 
         cam2Lib.startPreview();

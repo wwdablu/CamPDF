@@ -17,7 +17,8 @@ public final class ImageManager {
     public boolean save(@NonNull Bitmap bitmap,
                         @NonNull File file,
                         Bitmap.CompressFormat compressFormat,
-                        @IntRange(from = 1, to = 100) int compress) {
+                        @IntRange(from = 1, to = 100) int compress,
+                        boolean recycleOnComplete) {
 
         FileOutputStream fos = null;
         try {
@@ -36,6 +37,10 @@ public final class ImageManager {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+
+            if(recycleOnComplete) {
+                bitmap.recycle();
             }
         }
 

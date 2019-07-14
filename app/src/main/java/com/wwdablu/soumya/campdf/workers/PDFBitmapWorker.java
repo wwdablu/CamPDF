@@ -45,14 +45,14 @@ public final class PDFBitmapWorker extends Thread {
             }
         }
 
-        mCallback.onCompleted();
-
         try {
             mPdfManager.publish();
         } catch (IOException e) {
             mCallback.onError();
             Log.e(PDFBitmapWorker.class.getName(), "Could not create PDF.", e);
         }
+
+        mCallback.onCompleted();
     }
 
     private boolean isSupportedImageFile(File file) {
