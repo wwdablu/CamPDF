@@ -149,7 +149,7 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
 
         final View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_save_capture, null, false);
 
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
             .setTitle("File Name")
             .setMessage("Provide name of the file")
             .setView(dialogView)

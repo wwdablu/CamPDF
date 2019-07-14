@@ -58,12 +58,12 @@ public class CapturePreviewActivity extends AppCompatActivity {
 
             switch (view.getId()) {
                 case R.id.btn_rotate_left:
-                    mImageView.rotate(BaseExtImageView.Rotate.CCW_90);
+                    mImageView.rotate(BaseExtImageView.Rotate.CCW_90, rotationResult);
                     break;
 
                 case R.id.btn_rotate_right:
                 default:
-                    mImageView.rotate(BaseExtImageView.Rotate.CW_90);
+                    mImageView.rotate(BaseExtImageView.Rotate.CW_90, rotationResult);
                     break;
             }
         }
@@ -103,4 +103,16 @@ public class CapturePreviewActivity extends AppCompatActivity {
             }
         });
     }
+
+    private Result<Void> rotationResult = new Result<Void>() {
+        @Override
+        public void onComplete(Void data) {
+            //
+        }
+
+        @Override
+        public void onError(Throwable throwable) {
+            //
+        }
+    };
 }
