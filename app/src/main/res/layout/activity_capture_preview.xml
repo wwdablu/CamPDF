@@ -6,18 +6,6 @@
     android:background="@color/capture_preview_background"
     tools:context=".ui.CapturePreviewActivity">
 
-    <!-- Provides a translucent background to the container -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@id/gl_options_container"
-        android:layout_alignBottom="@id/gl_options_container"
-        android:background="#FFFFFF"
-        android:alpha="0.85"
-        />
-
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
@@ -34,6 +22,8 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:background="@null"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
             android:src="@drawable/ic_accept"
             android:contentDescription="@string/accept_capture"/>
 
@@ -44,6 +34,8 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:background="@null"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
             android:src="@drawable/ic_cancel"
             android:contentDescription="@string/cancel_capture"/>
 
@@ -54,6 +46,8 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:background="@null"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
             android:src="@drawable/ic_rotate_left"
             android:contentDescription="@string/rotate_left"/>
 
@@ -64,12 +58,14 @@
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:background="@null"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
             android:src="@drawable/ic_rotate_right"
             android:contentDescription="@string/rotate_right"/>
 
     </GridLayout>
 
-    <com.wwdablu.soumya.extimageview.rect.ExtRectImageView
+    <com.wwdablu.soumya.extimageview.trapez.ExtTrapezImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/iv_capture_preview"

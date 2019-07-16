@@ -39,7 +39,7 @@ dependencies {
     implementation 'com.github.wwdablu:Cam2Lib:1.0.1'
     implementation 'com.github.wwdablu:SimplyPDF:1.1.2'
     implementation 'com.github.wwdablu:wZip:1.0.1'
-    implementation 'com.github.wwdablu:ExtImageView:1.0.1'
+    implementation 'com.github.wwdablu:ExtImageView:1.1.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

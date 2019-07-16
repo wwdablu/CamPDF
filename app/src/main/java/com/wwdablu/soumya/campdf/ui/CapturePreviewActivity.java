@@ -14,10 +14,11 @@ import com.wwdablu.soumya.campdf.util.ShareBox;
 import com.wwdablu.soumya.extimageview.BaseExtImageView;
 import com.wwdablu.soumya.extimageview.Result;
 import com.wwdablu.soumya.extimageview.rect.ExtRectImageView;
+import com.wwdablu.soumya.extimageview.trapez.ExtTrapezImageView;
 
 public class CapturePreviewActivity extends AppCompatActivity {
 
-    private ExtRectImageView mImageView;
+    private ExtTrapezImageView mImageView;
 
     private String mShareBoxKey;
 

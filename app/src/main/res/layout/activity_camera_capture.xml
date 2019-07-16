@@ -21,36 +21,42 @@
         android:id="@+id/gl_options_container"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:columnCount="4"
+        android:columnCount="3"
         android:rowCount="1">
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="64dp"
+            android:layout_height="112dp"
             android:id="@+id/btn_complete"
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:background="@null"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
             android:src="@drawable/ic_accept"
             android:contentDescription="@string/accept_capture"/>
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="64dp"
+            android:layout_height="112dp"
             android:id="@+id/btn_capture"
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:background="@null"
+            android:scaleX="2.5"
+            android:scaleY="2.5"
             android:src="@drawable/ic_menu_camera"
             android:contentDescription="@string/accept_capture"/>
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="64dp"
+            android:layout_height="112dp"
             android:id="@+id/btn_cancel"
             android:layout_columnSpan="1"
             android:layout_columnWeight="1"
             android:background="@null"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
             android:src="@drawable/ic_cancel"
             android:contentDescription="@string/cancel_capture"/>
 
