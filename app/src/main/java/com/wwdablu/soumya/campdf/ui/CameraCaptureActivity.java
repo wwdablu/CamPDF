@@ -169,10 +169,9 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
                         Analytics.getInstance().logPdfCreation();
 
                         CheckBox saveAsZip = dialogView.findViewById(R.id.cb_save_image_zip);
-                        CheckBox saveImages = dialogView.findViewById(R.id.cb_save_as_images);
 
                         if(saveAsZip.isChecked()) {
-                            generateZipArchive(saveImages.isChecked());
+                            generateZipArchive();
                         } else {
                             setResult(Activity.RESULT_OK);
                             StorageManager.cleanImages(mStoragePath);
@@ -190,7 +189,7 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
             .show();
     }
 
-    private void generateZipArchive(final boolean saveImages) {
+    private void generateZipArchive() {
 
         ZipManager.generateZip(mFileName, mStoragePath, new WZipCallback() {
             @Override
@@ -201,12 +200,7 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
             @Override
             public void onZipCompleted(File zipFile, String identifier) {
 
-                if(saveImages) {
-                    Analytics.getInstance().logImageCreation();
-                } else {
-                    StorageManager.cleanImages(mStoragePath);
-                }
-
+                StorageManager.cleanImages(mStoragePath);
                 Analytics.getInstance().logZipCreation();
                 runOnUiThread(() -> {
                     setResult(Activity.RESULT_OK);
@@ -222,6 +216,7 @@ public class CameraCaptureActivity extends AppCompatActivity implements Cam2LibC
 
             @Override
             public void onError(Throwable throwable, String identifier) {
+                StorageManager.cleanImages(mStoragePath);
                 finish();
             }
         });

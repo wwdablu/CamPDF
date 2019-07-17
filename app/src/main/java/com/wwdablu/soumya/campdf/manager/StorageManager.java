@@ -69,6 +69,18 @@ public final class StorageManager {
         return createDirIfNot(createDirIfNot(extDir, context.getString(R.string.app_name)), folderName);
     }
 
+    public static void removeFolder(EntryInfo entryInfo) {
+
+        File[] files = entryInfo.captureDirectory.listFiles();
+        for(File file : files) {
+            if(!file.delete()) {
+                Log.d(StorageManager.class.getName(), "Could not delete, " + file.getName());
+            }
+        }
+
+        entryInfo.captureDirectory.delete();
+    }
+
     public static LinkedList<EntryInfo> getCapturedSessions(@NonNull Context context) {
 
         File camDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath()

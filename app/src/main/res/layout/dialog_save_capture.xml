@@ -18,23 +18,6 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/save_as_pdf"
-        android:checked="true"
-        android:clickable="false"
-        android:text="@string/save_as_pdf"
-        />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cb_save_as_images"
-        android:checked="false"
-        android:text="@string/save_as_jpeg_files"
-        />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/cb_save_image_zip"
         android:checked="false"
         android:text="@string/create_zip_archive_of_images"

@@ -11,55 +11,45 @@
     app:cardMaxElevation="4dp"
     app:cardCornerRadius="8dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10">
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_delete"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_delete"
+            />
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_share"
+            android:src="@drawable/ic_share"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/iv_delete"
+            />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_file_name"
-            android:layout_weight="7"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             tools:text="Captured"
-            android:layout_marginStart="16dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@id/iv_share"
+            android:layout_centerVertical="true"
             android:padding="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp"
-            android:layout_weight="3"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:layout_marginTop="8dp"
-            android:weightSum="2">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/iv_share"
-                android:src="@drawable/ic_share"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/iv_delete"
-                android:src="@drawable/ic_delete"
-                android:layout_weight="1"
-                />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

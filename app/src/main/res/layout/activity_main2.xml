@@ -20,9 +20,40 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include
-        android:id="@+id/incl_content_main"
-        layout="@layout/content_main" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/recycler_background"
+        tools:context=".ui.CaptureListActivity"
+        tools:showIn="@layout/app_bar_main">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_no_captured_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="120dp"
+            android:textAlignment="center"
+            android:text="@string/no_pdf_start_creating"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
+            android:layout_alignParentBottom="true"
+            android:visibility="visible"
+            tools:text="@string/no_pdf_start_creating"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_captured_docs_list"
+            android:background="@color/recycler_background"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:paddingTop="16dp"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
