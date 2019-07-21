@@ -10,6 +10,9 @@ import com.wwdablu.soumya.campdf.manager.PdfManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public final class PDFBitmapWorker extends Thread {
 
@@ -35,6 +38,8 @@ public final class PDFBitmapWorker extends Thread {
         mCallback.onStarted();
 
         File[] allFiles = mStorageDir.listFiles();
+        Arrays.sort(allFiles);
+
         for(File file : allFiles) {
 
             if (isSupportedImageFile(file)) {
