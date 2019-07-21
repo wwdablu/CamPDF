@@ -5,6 +5,14 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_menu_gallery.xml" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_menu_manage.xml" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_menu_send.xml" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_menu_share.xml" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_menu_slideshow.xml" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/side_nav_bar.xml" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

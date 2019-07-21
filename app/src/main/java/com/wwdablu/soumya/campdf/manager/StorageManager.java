@@ -142,7 +142,8 @@ public final class StorageManager {
 
         File[] files = storageDirectory.listFiles();
         for(File file : files) {
-            if(!file.getName().toLowerCase().endsWith(".pdf") && !file.delete()) {
+            if(!file.getName().toLowerCase().endsWith(".pdf") &&
+                    !file.getName().toLowerCase().endsWith(".zip") && !file.delete()) {
                 Log.d(StorageManager.class.getName(), "Could not delete, " + file.getName());
             }
         }

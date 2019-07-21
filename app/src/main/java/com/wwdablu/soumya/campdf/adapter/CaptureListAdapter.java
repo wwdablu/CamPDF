@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -61,25 +62,46 @@ public class CaptureListAdapter extends RecyclerView.Adapter<CaptureListAdapter.
         private TextView mFileNameTextView;
         private CardView mCardView;
         private ImageView mDelete;
-        private ImageView mShowFolder;
+        private ImageView mSharePdf;
+        private ImageView mShareZip;
 
         CaptureSessionViewHolder(@NonNull View itemView) {
             super(itemView);
             mFileNameTextView = itemView.findViewById(R.id.tv_file_name);
             mCardView = itemView.findViewById(R.id.cv_container);
             mDelete = itemView.findViewById(R.id.iv_delete);
-            mShowFolder = itemView.findViewById(R.id.iv_share);
+            mSharePdf = itemView.findViewById(R.id.iv_share_pdf);
+            mShareZip = itemView.findViewById(R.id.iv_share_zip);
 
             mDelete.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 mCallback.onDelete(mEntryInfoList.get(position), position);
             });
 
-            mShowFolder.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                Uri uri = Uri.parse(mEntryInfoList.get(getAdapterPosition()).getCaptureDirectory().getPath());
-                intent.setDataAndType(uri, "text/csv");
-                mShowFolder.getContext().startActivity(Intent.createChooser(intent, "Open folder"));
+            mSharePdf.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                StorageManager.EntryInfo entryInfo = mEntryInfoList.get(getAdapterPosition());
+                String auth = v.getContext().getPackageName() + ".fileprovider";
+                intent.setDataAndType(FileProvider.getUriForFile(v.getContext(), auth, entryInfo.getPdfFile()), "application/pdf");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                v.getContext().startActivity(intent);
+            });
+
+            mShareZip.setOnClickListener(v -> {
+                StorageManager.EntryInfo entryInfo = mEntryInfoList.get(getAdapterPosition());
+
+                if(!entryInfo.hasZip()) {
+                    Toast.makeText(v.getContext(), "No zip file found to share.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                String auth = v.getContext().getPackageName() + ".fileprovider";
+                intent.setDataAndType(FileProvider.getUriForFile(v.getContext(), auth, entryInfo.getPdfFile()), "application/zip");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                v.getContext().startActivity(intent);
             });
 
             mCardView.setOnClickListener(view -> {

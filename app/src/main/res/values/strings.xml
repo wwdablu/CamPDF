@@ -35,4 +35,6 @@
     <string name="completed">Completed</string>
     <string name="share_document">Share document</string>
     <string name="delete_document">Delete document</string>
+    <string name="delete_document_title">Delete document</string>
+    <string name="delete_document_message">Would you like to delete all the documents captured</string>
 </resources>

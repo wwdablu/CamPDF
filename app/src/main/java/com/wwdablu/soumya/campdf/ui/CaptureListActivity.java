@@ -1,20 +1,19 @@
 package com.wwdablu.soumya.campdf.ui;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.wwdablu.soumya.campdf.R;
@@ -33,7 +32,7 @@ public class CaptureListActivity extends AppCompatActivity implements CaptureLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
@@ -84,8 +83,19 @@ public class CaptureListActivity extends AppCompatActivity implements CaptureLis
 
     @Override
     public void onDelete(StorageManager.EntryInfo entryInfo, int position) {
-        StorageManager.removeFolder(entryInfo);
-        updateList();
+
+        new AlertDialog.Builder(this)
+            .setTitle(getString(R.string.delete_document_title))
+            .setMessage(getString(R.string.delete_document_message))
+            .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                StorageManager.removeFolder(entryInfo);
+                updateList();
+            })
+            .setNegativeButton(getString(R.string.no), (dialog, which) -> {
+                //Do nothing
+            })
+            .create()
+            .show();
     }
 
     @Override
